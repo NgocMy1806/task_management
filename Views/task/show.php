@@ -50,7 +50,7 @@
                 </div>
                 <form action="<?= DOMAIN . '/task/addlog/' . $task->id; ?>" method="post">
                     <div class="modal-body">
-                        <input type="hidden" id="task_id" name="task_id" value="<?= $task->id; ?>">
+                        <!-- <input type="hidden" id="task_id" name="task_id" value="<?= $task->id; ?>"> -->
 
                         <div class="mb-3">
                             <label for="log_time" class="form-label">log_time</label>
@@ -68,9 +68,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
-
                     </div>
-
                 </form>
             </div>
         </div>

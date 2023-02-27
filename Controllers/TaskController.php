@@ -85,15 +85,17 @@ class TaskController extends Controller
         return $this->render('task/show', ['task' => $task]);
     }
 
-    public function addlog()
+    public function addlog($task_id)
     {
-        $task_id = $_POST(['task_id']);
-        $query = $this->model->getBdd()->prepare('insert into logs (task_id, log_time,progress, content, create_at)values (:task_id, :log_time, :progress, :content, :create_at);');
+        var_dump($_POST);
+        //$task_id = $_POST(['task_id']);
+        $query = $this->model->getBdd()->prepare('insert into logs (task_id, log_time,progress, content, create_at)
+        values (:task_id, :log_time, :progress, :content, :create_at);');
         $log = $query->execute([
-            'task_id' => $_POST(['task_id']),
-            'log_time' => $_POST(['log_time']),
-            'progress' => $_POST(['progress']),
-            'content' => $_POST(['content']),
+           'task_id' =>$task_id,
+            'log_time' => $_POST['log_time'],
+            'progress' => $_POST['progress'],
+            'content' => $_POST['content'],
             'create_at' => date('Y-m-d H:i:s'),
         ]);
 
