@@ -1,0 +1,8 @@
+#file này là viêt cho apache, ko phải cho php 
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# dòng này có tác dụng bảo apache là các phần /trên url ko phải là file path folder, mà nó là controller và action, nói chung mình sẽ truyền đống uri vào biến path
+# nếu ko có dòng này thì nếu gọi đến url /task/edit thì nó sẽ hiểu là mở file edit trong folder task.
+RewriteRule ^(.*)$ /index.php?path=$1   
