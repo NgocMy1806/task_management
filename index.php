@@ -12,13 +12,10 @@ require_once 'Controllers/Controller.php';
 // $query = $conn->getInstance()->query('select * from tasks;');
 // $tasks=$query->fetchAll();
 // var_dump($tasks);
+
 session_start();
 define ("DOMAIN",$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME']);
 
 $dispatcher = new Dispatch();
 $dispatcher->dispatcher();
 
-
-
-
-?>

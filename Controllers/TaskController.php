@@ -15,7 +15,10 @@ class TaskController extends Controller
     {
 
 
-        $query = $this->model->getBdd()->query('select * from tasks');
+        $query = $this->model->getBdd()->query('select t.*,  sum(l.log_time) as log_time1, u.name as pic
+        FROM logs as l join tasks as t on l.task_id=t.id 
+        join users as u on u.id=t.user_id
+        group by (l.task_id) ');
 
         $tasks = $query->fetchAll();
         return $this->render('task/index', ['tasks' => $tasks]);
@@ -79,6 +82,11 @@ class TaskController extends Controller
 
     public function show($id)
     {
+
+        $querylog=  $this->model->getBdd()->prepare('select * from logs where task_id=:id order by create_at ASC');
+        $logs=$querylog->execute (['id' => $id]);
+        $logs=$querylog->fetchall();
+
         $query = $this->model->getBdd()->prepare('select * from tasks where id=:id');
         $task = $query->execute(['id' => $id]);
         $task = $query->fetch();

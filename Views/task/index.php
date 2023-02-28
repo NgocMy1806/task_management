@@ -19,6 +19,8 @@
         <th scope="col">end date</th>
         <th scope="col">estimate</th>
         <th scope="col">logged time</th>
+        <!-- <th scope="col">progress</th> -->
+        <th scope="col">PIC</th>
         <th scope="col">action</th>
       </tr>
     </thead>
@@ -31,7 +33,8 @@
           <td><?= $task->start_date;  ?></td>
           <th><?= $task->end_date;  ?></th>
           <td><?= $task->estimate ?? 0;  ?></td>
-          <td><?= $task->log_time ?? 0;  ?></td>
+          <td><?= $task->log_time1 ?? 0;  ?></td>
+          <td><?= $task->pic ?? 0;  ?></td>
           <td>
             <a href="<?= DOMAIN . '/task/edit/' . $task->id; ?>" class="btn btn-secondary"><i class="fa-regular fa-pen-to-square"></i></a>
             <a href="<?= DOMAIN . '/task/show/' . $task->id; ?>" class="btn btn-secondary"><i class="fa-solid fa-eye"></i></a>
