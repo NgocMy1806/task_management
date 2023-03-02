@@ -13,14 +13,31 @@ class TaskController extends Controller
 
     public function index()
     {
-
-
-        $query = $this->model->getBdd()->query('select t.*,  sum(l.log_time) as log_time1, u.name as pic
-        FROM logs as l join tasks as t on l.task_id=t.id 
-        join users as u on u.id=t.user_id
-        group by (l.task_id) ');
+        $sql1 = 'select t.*,""as log_time1, u.name as pic
+        FROM tasks as t left join users as u on u.id=t.user_id';
+        $sql2 = 'select sum(log_time) as log_time1, task_id as id from logs group by (task_id)';
+        $query = $this->model->getBdd()->query($sql1);
 
         $tasks = $query->fetchAll();
+
+        $query2 = $this->model->getBdd()->query($sql2);
+        $total_logs = $query2->fetchAll(PDO::FETCH_ASSOC);
+
+//lay ra total log cua task (neu co)
+        foreach ($tasks as $task) {
+            foreach ($total_logs as $total_log) {
+                if (in_array($task->id, $total_log)) {
+                    $task->log_time1=$total_log['log_time1'];
+                }
+            }
+        };
+        // echo "<pre>";
+        // var_dump($tasks);
+        // echo "</pre>";
+        // echo "<pre>";
+        // var_dump($total_log);
+        // echo "</pre>";
+
         return $this->render('task/index', ['tasks' => $tasks]);
     }
 
@@ -82,15 +99,18 @@ class TaskController extends Controller
 
     public function show($id)
     {
+       
+        $querylog =  $this->model->getBdd()->prepare('select * from logs where task_id=:id order by create_at ASC');
+        $logs = $querylog->execute(['id' => $id]);
+        $logs = $querylog->fetchAll();
+        
 
-        $querylog=  $this->model->getBdd()->prepare('select * from logs where task_id=:id order by create_at ASC');
-        $logs=$querylog->execute (['id' => $id]);
-        $logs=$querylog->fetchall();
-
-        $query = $this->model->getBdd()->prepare('select * from tasks where id=:id');
+        $query = $this->model->getBdd()->prepare('select t.*, sum(l.log_time) as log_time1, u.name as pic
+        FROM tasks as t left join users as u on u.id=t.user_id join logs as l on t.id=l.task_id  where t.id=:id group by (l.task_id)');
         $task = $query->execute(['id' => $id]);
         $task = $query->fetch();
-        return $this->render('task/show', ['task' => $task]);
+
+        return $this->render('task/show', ['task' => $task, 'logs' => $logs]);
     }
 
     public function addlog($task_id)
@@ -100,7 +120,7 @@ class TaskController extends Controller
         $query = $this->model->getBdd()->prepare('insert into logs (task_id, log_time,progress, content, create_at)
         values (:task_id, :log_time, :progress, :content, :create_at);');
         $log = $query->execute([
-           'task_id' =>$task_id,
+            'task_id' => $task_id,
             'log_time' => $_POST['log_time'],
             'progress' => $_POST['progress'],
             'content' => $_POST['content'],

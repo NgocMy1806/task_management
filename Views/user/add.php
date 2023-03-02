@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <form action="<?= isset($user) ? DOMAIN . 'user/update' . $user->id : DOMAIN . 'user/store'  ?>" method="post">
+    <form action="<?= isset($user) ? DOMAIN . '/user/update/' . $user->id : DOMAIN . '/user/store'  ?>" method="post">
         <div class="card">
             <div class="card-header">
                 <h1><?= isset($user) ? 'Edit user' : 'Add user' ?></h1>

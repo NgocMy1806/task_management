@@ -34,12 +34,15 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $query = $this->model->getBdd()->prepare('select * from users where id=:id');
-        $user = $query->excute([
-            'id' => $id
-        ]);
+        // $query = $this->model->getBdd()->prepare('select * from users where id=:id');
+        
+        // $user = $query->excute([
+        //     'id' => $id
+        // ]);
+        $query=$this->model->getBdd()->query('select * from users where id='.$id);
         $user = $query->fetch();
-        return $this->render('user/edit', ['user' => $user]);
+        var_dump($user);
+        return $this->render('user/add', ['user' => $user]);
     }
 
     public function update($id)

@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <a href="<?= DOMAIN . 'user/add'; ?>"> Add user </a>
+    <a href="<?= DOMAIN . '/user/add'; ?>"> Add user </a>
 </div>
 <div class="col-md-12">
     <?php if (isset($_SESSION['success'])) : ?>
@@ -22,7 +22,7 @@
                     <td><?=$user->name ?></td>
                     <td><?=$user->email ?> </td>
                     <td>
-                        <a href="<?=DOMAIN.'user/edit/'.$user->id;?>"class="btn btn-secondary" >Edit</a>
+                        <a href="<?=DOMAIN.'/user/edit/'.$user->id;?>"class="btn btn-secondary" >Edit</a>
                         <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#deluser">Delete</a>
                     </td>
                 </tr>

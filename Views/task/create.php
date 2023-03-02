@@ -16,12 +16,12 @@
                 </div>
                 <div class="mb-3">
                     <label for="start_date" class="form-label">start date</label>
-                    <input type="datetime-local" name="start_date" class="form-control" id="start_date" placeholder="start_date" value="<?= isset($task) ? date('Y-m-d', strtotime($task->start_date)) : '' ?>">
+                    <input type="datetime-local" name="start_date" class="form-control" id="start_date" placeholder="start_date" value="<?= isset($task) ?$task->start_date : '' ?>">
                     <!-- <input class="flatpickr form-control input" placeholder="Select Date.." tabindex="0" type="text" readonly="readonly"> -->
                 </div>
                 <div class="mb-3">
                     <label for="end_date" class="form-label">end date</label>
-                    <input type="datetime-local" name="end_date" class="form-control" id="end_date" placeholder="end_date" value="<?= isset($task) ? date('Y-m-d', strtotime($task->end_date)) : '' ?>">
+                    <input type="datetime-local" name="end_date" class="form-control" id="end_date" placeholder="end_date" value="<?= isset($task) ? $task->end_date : '' ?>">
                 </div>
                 <div class="mb-3">
                     <label for="estimate" class="form-label">estimate</label>
@@ -32,6 +32,7 @@
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary"><?= isset($task) ? 'Edit' : 'Add' ?></button>
                 <button type="reset" class="btn btn-secondary">reset</button>
+                <a href="<?= DOMAIN . '/task/index'; ?>" class="btn btn-secondary">Back</i></a>
             </div>
 
     </form>
